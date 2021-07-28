@@ -14,35 +14,37 @@ terraform {
 module "main" {
   source = "../.."
 
-  name        = "ABC"
-  alias       = "ALIAS"
-  description = "DESCR"
+  name = "FEX1"
 }
 
-data "aci_rest" "fvTenant" {
-  dn = "uni/tn-ABC"
+data "aci_rest" "infraFexP" {
+  dn = "uni/infra/fexprof-${module.main.name}"
 
   depends_on = [module.main]
 }
 
-resource "test_assertions" "fvTenant" {
-  component = "fvTenant"
+resource "test_assertions" "infraFexP" {
+  component = "infraFexP"
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.fvTenant.content.name
-    want        = "ABC"
+    got         = data.aci_rest.infraFexP.content.name
+    want        = module.main.name
   }
+}
 
-  equal "nameAlias" {
-    description = "nameAlias"
-    got         = data.aci_rest.fvTenant.content.nameAlias
-    want        = "ALIAS"
-  }
+data "aci_rest" "infraFexBndlGrp" {
+  dn = "${data.aci_rest.infraFexP.id}/fexbundle-${module.main.name}"
 
-  equal "descr" {
-    description = "descr"
-    got         = data.aci_rest.fvTenant.content.descr
-    want        = "DESCR"
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "infraFexBndlGrp" {
+  component = "infraFexBndlGrp"
+
+  equal "name" {
+    description = "name"
+    got         = data.aci_rest.infraFexBndlGrp.content.name
+    want        = module.main.name
   }
 }
