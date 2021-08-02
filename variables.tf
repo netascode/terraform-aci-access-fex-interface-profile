@@ -1,5 +1,5 @@
 variable "name" {
-  description = "FEX interface profile name"
+  description = "FEX interface profile name."
   type        = string
 
   validation {
