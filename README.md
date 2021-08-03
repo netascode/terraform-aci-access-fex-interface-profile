@@ -42,8 +42,8 @@ module "aci_access_fex_interface_profile" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `infraFexP` object |
-| <a name="output_name"></a> [name](#output\_name) | FEX interface profile name |
+| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `infraFexP` object. |
+| <a name="output_name"></a> [name](#output\_name) | FEX interface profile name. |
 
 ## Resources
 
