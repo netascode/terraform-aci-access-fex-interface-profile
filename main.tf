@@ -7,7 +7,7 @@ resource "aci_rest" "infraFexP" {
 }
 
 resource "aci_rest" "infraFexBndlGrp" {
-  dn         = "${aci_rest.infraFexP.id}/fexbundle-${var.name}"
+  dn         = "${aci_rest.infraFexP.dn}/fexbundle-${var.name}"
   class_name = "infraFexBndlGrp"
   content = {
     name = var.name
