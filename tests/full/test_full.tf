@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -17,7 +17,7 @@ module "main" {
   name = "FEX1"
 }
 
-data "aci_rest" "infraFexP" {
+data "aci_rest_managed" "infraFexP" {
   dn = "uni/infra/fexprof-${module.main.name}"
 
   depends_on = [module.main]
@@ -28,13 +28,13 @@ resource "test_assertions" "infraFexP" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.infraFexP.content.name
+    got         = data.aci_rest_managed.infraFexP.content.name
     want        = module.main.name
   }
 }
 
-data "aci_rest" "infraFexBndlGrp" {
-  dn = "${data.aci_rest.infraFexP.id}/fexbundle-${module.main.name}"
+data "aci_rest_managed" "infraFexBndlGrp" {
+  dn = "${data.aci_rest_managed.infraFexP.id}/fexbundle-${module.main.name}"
 
   depends_on = [module.main]
 }
@@ -44,7 +44,7 @@ resource "test_assertions" "infraFexBndlGrp" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.infraFexBndlGrp.content.name
+    got         = data.aci_rest_managed.infraFexBndlGrp.content.name
     want        = module.main.name
   }
 }
